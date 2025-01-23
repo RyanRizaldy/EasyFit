@@ -1,0 +1,407 @@
+p,h1,h2,h3,h4,h5,h6{
+  margin:0;
+  padding: 0;
+}
+input[type="email"],input[type="password"],input[type="text"],input[type="number"]{
+  border: none;
+  outline: none;
+  box-sizing: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+}
+
+.option{
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  padding: 10px 0;
+}
+.formInput{
+  margin-top: 60px;
+}
+*{
+  font-family: 'Inter', sans-serif;
+}
+
+/*-------------------- HEADER --------------------*/
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:20px;
+}
+
+.navMenu{
+  font-weight: bold;
+  
+}
+.navLogin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navButton{
+  border-radius: 50px;
+  margin: 0 10px;
+  padding:15px;
+}
+@media only screen and (max-width: 600px){
+  .navLogin{
+    justify-content:left;
+  }
+  .navLogin a{
+    margin:10px 0!important;
+    font-weight:normal !important;
+  }
+  .navLogin button{
+    display: none;
+  }
+
+}
+@media only screen and (max-width: 480px){
+.navbar{
+  padding:10px 0;
+}
+}
+
+/*-------------------- FOOTER --------------------*/
+.footer{
+  background-color: #25403d;
+  color: #fff;
+  padding-top: 50px;
+}
+.footerLink a{
+  text-decoration: none!important;
+  color: #fff;
+}
+.footerLink li{
+  list-style:none;
+  margin-top: 30px;
+}
+.footerLink ul {
+  padding: 0;
+}
+.footerLogo{
+  filter: brightness(0) invert(1);
+  
+}
+.footerLogoContainer{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.copyright{
+  display: flex;
+  justify-content:space-between;
+}
+@media only screen and (max-width: 600px){
+  .footerLogoContainer{
+    display: flex;
+    justify-content: center;
+    margin-bottom:30px ;
+  }
+  .footer{
+    text-align: center;
+  }
+  .footerLink{
+    margin-bottom:30px ;
+  }
+}
+/*-------------------- LOGIN --------------------*/
+.loginContainer{
+  margin-top: 10%;
+  margin-bottom: 20%;
+}
+.loginForm{
+  border: none;
+  outline: none;
+  border-right: 1px solid #ccc;
+  padding-right: 40px;
+}
+.loginForm h2{
+  text-align: center;
+  margin-bottom: 50px;
+}
+.loginButtonWrapper{
+  display: flex;
+  justify-content: center;
+  
+}
+.loginButton{
+  border-radius: 40px;
+  padding: 15px 60px;
+  justify-content: center;
+  margin-top: 30px;
+  
+}
+.accountButton{
+  border-radius: 40px;
+  padding: 15px ;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+}
+.accountChoice{
+  padding:0 100px;
+  
+}
+.accountChoice h2{
+  text-align: center;
+  
+}
+.googleButton{
+  background:white;
+  border: 1px solid black
+}
+@media only screen and (max-width: 600px){
+.loginForm{
+  padding: 0 20px;
+  border: none;
+  margin-bottom: 100px;
+}
+
+}
+@media only screen and (max-width: 480px){
+.accountChoice{
+  padding:0 50px ;
+}
+.loginButton{
+padding:15px 110px ;
+}
+}
+
+
+/*-------------------- REGISTER --------------------*/
+.registerForm h1{
+  font-size: 80px;
+  line-height: 80px;
+  margin-bottom: 50px;
+}
+.registerAs{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+@media only screen and (max-width: 600px){
+.registerImg{
+  display: none;
+}
+
+}
+@media only screen and (max-width: 480px){
+  .registerForm h1{
+    font-size: 60px;
+  }
+}
+
+/*-------------------- DASBOARD --------------------*/
+.userInfoContainer{
+  background-color: rgba(232,208,188,1);
+  padding-bottom: 100px;
+  margin-bottom: 3%;
+  
+}
+.userPic{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: center; 
+}
+.userPic h5{
+  margin-top: 20px;
+  font-weight: bold;
+ 
+}
+.userInfo{
+  margin-top: 20px;
+  
+}
+.userInfo h5{
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.userInfo p {
+  margin-top: 15px;
+
+}
+.contentTitle h2{
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+.contentWrapper{
+  background-color: #f3f3f3;
+  margin-bottom: 50px;
+  padding-bottom: 100px;
+}
+.cardWrapper{
+  padding: 10px  ;
+  
+}
+.card{
+  background-color: white;
+  margin-top: 20px;
+  border: none;
+  padding: 15px;
+  
+}
+.card h5{
+  font-weight: bold;
+  text-align: center;
+  
+}
+.card h6{
+  font-weight: bolder;
+  text-align: center;
+  
+}
+.card h4{
+  font-weight: semibold;
+  text-align: center;
+}
+
+.reciveButton{
+  border-radius: 40px;
+  padding: 15px 50px;
+  margin-top:  50px; 
+}
+.reciveWrapper{
+  display: flex;
+  justify-content: right;
+
+}
+.cardStatus{
+  padding: 15px 20px;
+  margin-top:  50px; 
+}
+@media only screen and (max-width: 600px){
+.userInfoContainer{
+  padding-left: 20px;
+}
+}
+/*-------------------- HOME  --------------------*/
+.banner{
+position:relative;
+height: 100%;
+width: 100%;
+
+}
+.banner img{
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+.bannerText{
+  position: absolute;
+  margin: 10% 50px;
+  
+}
+.bannerText h1{
+  font-size: 70px;
+  line-height: 80px;
+  font-weight: bolder ;
+}
+.whyUs{
+  background-color:rgba(232,208,188,1);
+}
+.whyUs h3{
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.bestMealOption{
+  margin-bottom: 30px;
+}
+.bestMealOption h4{
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.reason{
+  display: flex;
+  margin-bottom: 30px;
+}
+@media only screen and (max-width: 600px){
+  .bannerText h1{
+    font-size: 30px;
+    line-height:40px;
+    
+  }
+  .bannerText{
+    margin-left: 0;
+  }
+  .whyUs{
+    text-align: center;
+  }
+  .whyUs p{
+    margin-bottom: 30px;
+  }
+  .bestMealOption{
+    text-align: center;
+  }
+  .bestMeal{
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+@media only screen and (max-width: 480px){
+  .bannerText h1{
+    font-size: 20px;
+    line-height:20px;
+    
+  }
+  .bannerText button{
+    padding:10px;
+    font-size: 15px;
+  }
+  .menuButton{
+    display: none;
+  }
+}
+/*-------------------- MENU  --------------------*/
+.ourMenu{
+  font-size: 72px;
+}
+@media only screen and (max-width: 480px){
+.ourMenu{
+  font-size: 60px;
+}
+.cardWrapper h6{
+  font-size: 30px;
+}
+
+.reciveWraper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+}
+/*-------------------- CONTACT  --------------------*/
+.contactLabel{
+  padding:0 30px
+  
+}
+.contactButton{
+ padding: 0 200px;   
+}
+@media only screen and (max-width: 480px){
+.contactLabel{
+  padding: 0;
+}
+.contactButton{
+  padding: 100px;
+}
+}
+/*-------------------- ABOUT  --------------------*/
+.imgContainer{
+ 
+}
+@media only screen and (max-width: 480px){
+.imgContainer img{
+  width: 300px;
+  margin-top: 30px;
+}
+}
+/*-------------------- DONOR  --------------------*/
+.donorContainer{
+  margin:200px 0;
+}
