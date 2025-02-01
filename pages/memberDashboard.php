@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -106,55 +107,99 @@
         </div>
 
           
-        <div class="container contentTitle">
-            <h2>Your Meal Progress</h2>
-          
-          </div>
-          <div class="container">
-      <h4 class="my-3 text-start">Order</h4>
-    </div>
+        <?php
+include '../prosess/config.php';
 
-    <!-- Container for the table -->
-    <div class="container">
-      <table class="table table-striped table-responsive border" style="margin-bottom:10%; ">
+// Pastikan user sudah login
+if (!isset($_SESSION['user_id'])) {
+    echo "Silakan login terlebih dahulu.";
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Ambil pesanan berdasarkan user_id
+$query = "SELECT id, order_id, status FROM orders WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
+<div class="container contentTitle">
+    <h2>Your Meal Progress</h2>
+</div>
+
+<div class="container">
+    <h4 class="my-3 text-start">Order Table</h4>
+</div>
+
+<!-- Table -->
+<div class="container">
+    <table class="table table-striped table-responsive border" style="margin-bottom:10%;">
         <thead>
-          <tr>
-            <th>No</th>
-            <th>Member Name</th>
-            <th>Order No</th>
-            <th>Partner</th>
-            <th>Driver</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
+            <tr>
+                <th>No</th>
+                <th>Order No</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
-          <!-- Example static rows (replace with dynamic logic if needed) -->
-          <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>ORD12345</td>
-            <td>Partner A</td>
-            <td>Driver X</td>
-            <td>Pending</td>
-            <td>
-              <button class="btn btn-primary" onclick="handleDoneOrder('ORD12345')">
-                Is meal arrived?
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jane Smith</td>
-            <td>ORD67890</td>
-            <td>-</td>
-            <td>-</td>
-            <td>Done</td>
-            <td></td>
-          </tr>
+            <?php $no = 1; while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $no++ ?></td>
+                    <td><?= htmlspecialchars($row['order_id']) ?></td>
+                    <td>
+                        <span id="status-<?= $row['id'] ?>"><?= htmlspecialchars($row['status']) ?></span>
+                    </td>
+                    <td>
+                        <?php if ($row['status'] !== 'Complete'): ?>
+                            <button class="btn btn-success btn-sm update-status" 
+                                    data-id="<?= $row['id'] ?>" 
+                                    data-status="Completed">
+                                Mark as Complete
+                            </button>
+                        <?php else: ?>
+                            <button class="btn btn-secondary btn-sm" disabled>Completed</button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
         </tbody>
-      </table>
-    </div>
+    </table>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".update-status").forEach(button => {
+        button.addEventListener("click", function () {
+            let orderId = this.getAttribute("data-id");
+            let status = this.getAttribute("data-status");
+
+            fetch("../prosess/Update.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+             body: `id=${encodeURIComponent(orderId)}&status=${encodeURIComponent(status)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    document.getElementById(`status-${orderId}`).textContent = "Complete";
+                    this.textContent = "completed";
+                    this.classList.remove("btn-success");
+                    this.classList.add("btn-secondary");
+                    this.setAttribute("disabled", "disabled");
+                } else {
+                    alert("Gagal memperbarui status: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    });
+});
+</script>
+
 
         <!-- Tautkan jQuery dan app.js -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

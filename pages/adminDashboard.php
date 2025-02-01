@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<?php
+include '../prosess/config.php';
+
+$result = $conn->query("SELECT * FROM orders");
+?>
+
 <html>
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -107,89 +114,77 @@
 
           
         <div class="container contentTitle">
-            <h2>Your Meal Progress</h2>
-          
-          </div>
-          <div class="container">
-      <h4 class="my-3 text-start">Order Table with Actions</h4>
-    </div>
+    <h2>Your Meal Progress</h2>
+</div>
+<div class="container">
+    <h4 class="my-3 text-start">Order Table with Actions</h4>
+</div>
 
-    <!-- Container for the table -->
-    <div class="container">
-      <table class="table table-striped table-responsive border" style="margin-bottom:10%;">
-        <thead>
-          <tr>
+<!-- Container for the table -->
+<div class="container">
+<table class="table table-striped table-responsive border" style="margin-bottom:10%;">
+    <thead>
+        <tr>
             <th>No</th>
-            <th>Member Name</th>
+            <th>User Id</th>
             <th>Order No</th>
-            <th>Partner</th>
-            <th>Driver</th>
             <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Example row 1 -->
-          <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>ORD12345</td>
-            <td>Partner A</td>
-            <td>Driver X</td>
-            <td>Pending</td>
-            <td>
-              <button
-                class="btn btn-primary btn-sm"
-                onclick="handleEdit('ORD12345')"
-              >
-                Edit
-              </button>
-              <button
-                class="btn btn-danger btn-sm"
-                onclick="handleDelete('ORD12345')"
-              >
-                Delete
-              </button>
-              <button
-                class="btn btn-success btn-sm"
-                onclick="handleUpdate('ORD12345')"
-              >
-                Update
-              </button>
-            </td>
-          </tr>
-          <!-- Example row 2 -->
-          <tr>
-            <td>2</td>
-            <td>Jane Smith</td>
-            <td>ORD67890</td>
-            <td>Partner B</td>
-            <td>Driver Y</td>
-            <td>Completed</td>
-            <td>
-              <button
-                class="btn btn-primary btn-sm"
-                onclick="handleEdit('ORD67890')"
-              >
-                Edit
-              </button>
-              <button
-                class="btn btn-danger btn-sm"
-                onclick="handleDelete('ORD67890')"
-              >
-                Delete
-              </button>
-              <button
-                class="btn btn-success btn-sm"
-                onclick="handleUpdate('ORD67890')"
-              >
-                Update
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td><?= $row['user_id'] ?></td>
+                <td><?= $row['order_id'] ?></td>
+                <td>
+                    <select class="status-select form-select" data-id="<?= $row['id'] ?>">
+                        <option value="Pending" <?= $row['status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
+                        <option value="Processed" <?= $row['status'] == 'Processed' ? 'selected' : '' ?>>Processed</option>
+                        <option value="Delivered" <?= $row['status'] == 'Delivered' ? 'selected' : '' ?>>Delivered</option>
+                        <option value="Completed" <?= $row['status'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
+
+                    </select>
+                </td>
+                <td>
+                    <a href="../prosess/delete.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus pesanan ini?');">Delete</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </tbody>
+</table>
+
+</div>
+
+<!-- AJAX untuk Update Status -->
+<script>
+document.querySelectorAll('.status-select').forEach(select => {
+    select.addEventListener('change', function() {
+        let orderId = this.getAttribute('data-id');
+        let newStatus = this.value;
+
+        if (confirm("Apakah Anda yakin ingin mengubah status pesanan ini menjadi '" + newStatus + "'?")) {
+            fetch('../prosess/Update.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'id=' + encodeURIComponent(orderId) + '&status=' + encodeURIComponent(newStatus)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response dari server:", data); // Debugging
+                if (data.status === "success") {
+                    alert("Status berhasil diperbarui!");
+                } else {
+                    alert("Gagal mengupdate status: " + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+});
+</script>
+
 
         <!-- Tautkan jQuery dan app.js -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
