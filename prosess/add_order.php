@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'config.php'; // Pastikan koneksi database benar
+require_once 'config.php'; 
 
-// Pastikan hanya request POST yang bisa masuk
+// hanya request POST yang bisa masuk
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Cek apakah user sudah login
     if (!isset($_SESSION['user_id'])) {
